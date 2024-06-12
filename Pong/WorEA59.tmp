@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://bppoi5lwfblum"]
+
+[ext_resource type="PackedScene" uid="uid://d2l5wrs0wnmd3" path="res://Player.tscn" id="1_dftgt"]
+[ext_resource type="PackedScene" uid="uid://di2ycuc1e08hd" path="res://Opponent.tscn" id="2_mtjjd"]
+[ext_resource type="PackedScene" uid="uid://dra2jlmtcrtsn" path="res://Ball.tscn" id="3_g5k72"]
+
+[sub_resource type="Gradient" id="Gradient_peikh"]
+offsets = PackedFloat32Array(0.454545)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mkvyb"]
+gradient = SubResource("Gradient_peikh")
+
+[node name="World" type="Node2D"]
+
+[node name="Background" type="TextureRect" parent="."]
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = SubResource("GradientTexture2D_mkvyb")
+
+[node name="Camera" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="Player" parent="." instance=ExtResource("1_dftgt")]
+position = Vector2(1720, 540)
+
+[node name="Opponent" parent="." instance=ExtResource("2_mtjjd")]
+position = Vector2(200, 540)
+
+[node name="Ball" parent="." instance=ExtResource("3_g5k72")]
+position = Vector2(918, 518)

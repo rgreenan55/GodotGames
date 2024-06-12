@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://di2ycuc1e08hd"]
+
+[ext_resource type="Script" path="res://Opponent.gd" id="1_jjaaq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kmucm"]
+size = Vector2(20, 100)
+
+[sub_resource type="BoxMesh" id="BoxMesh_6yyfc"]
+size = Vector3(20, 100, 1)
+
+[node name="Opponent" type="CharacterBody2D" groups=["Opponent", "Paddle"]]
+script = ExtResource("1_jjaaq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_kmucm")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+mesh = SubResource("BoxMesh_6yyfc")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.25
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_handle_movement"]

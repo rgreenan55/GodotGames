@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://dra2jlmtcrtsn"]
+
+[ext_resource type="Script" path="res://Ball.gd" id="1_hlk1y"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ybe80"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_t1c46"]
+radius = 10.0
+height = 20.0
+
+[node name="Ball" type="CharacterBody2D" groups=["Ball"]]
+script = ExtResource("1_hlk1y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ybe80")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+mesh = SubResource("SphereMesh_t1c46")
+
+[node name="Trajectory" type="RayCast2D" parent="." groups=["BallTrajectory"]]
+collide_with_areas = true
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_start_ball"]
