@@ -1,16 +1,17 @@
-[gd_scene load_steps=13 format=3 uid="uid://bppoi5lwfblum"]
+[gd_scene load_steps=16 format=3 uid="uid://bppoi5lwfblum"]
 
-[ext_resource type="Script" path="res://World.gd" id="1_44hak"]
-[ext_resource type="PackedScene" uid="uid://d2l5wrs0wnmd3" path="res://Player.tscn" id="1_dftgt"]
-[ext_resource type="PackedScene" uid="uid://di2ycuc1e08hd" path="res://Opponent.tscn" id="2_mtjjd"]
-[ext_resource type="PackedScene" uid="uid://dra2jlmtcrtsn" path="res://Ball.tscn" id="3_g5k72"]
+[ext_resource type="Script" path="res://Scripts/World.gd" id="1_6xbj0"]
+[ext_resource type="PackedScene" uid="uid://dra2jlmtcrtsn" path="res://Scenes/Ball.tscn" id="2_vjkch"]
+[ext_resource type="PackedScene" uid="uid://d2l5wrs0wnmd3" path="res://Scenes/Player.tscn" id="3_receg"]
+[ext_resource type="PackedScene" uid="uid://di2ycuc1e08hd" path="res://Scenes/Opponent.tscn" id="4_pd3v8"]
+[ext_resource type="Script" path="res://Scripts/PauseMenu.gd" id="5_6i4jm"]
 
-[sub_resource type="Gradient" id="Gradient_peikh"]
+[sub_resource type="Gradient" id="Gradient_dk3v5"]
 offsets = PackedFloat32Array(0.454545)
 colors = PackedColorArray(0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_mkvyb"]
-gradient = SubResource("Gradient_peikh")
+gradient = SubResource("Gradient_dk3v5")
 
 [sub_resource type="LabelSettings" id="LabelSettings_vb37c"]
 font_size = 64
@@ -30,9 +31,16 @@ size = Vector2(3, 1080)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a0q41"]
 size = Vector2(3, 1080)
 
-[node name="World" type="Node2D"]
-script = ExtResource("1_44hak")
-BallNode = ExtResource("3_g5k72")
+[sub_resource type="LabelSettings" id="LabelSettings_d1vyl"]
+font_size = 64
+
+[sub_resource type="LabelSettings" id="LabelSettings_bu5ly"]
+font_size = 32
+font_color = Color(0.831373, 0.831373, 0.831373, 1)
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_6xbj0")
+BallNode = ExtResource("2_vjkch")
 
 [node name="UserInterface" type="Control" parent="."]
 layout_mode = 3
@@ -47,11 +55,16 @@ texture = SubResource("GradientTexture2D_mkvyb")
 metadata/_edit_lock_ = true
 
 [node name="PlayerScore" type="Label" parent="UserInterface"]
-layout_mode = 2
-offset_left = 1702.5
-offset_top = 62.0
-offset_right = 1739.5
-offset_bottom = 150.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 1100.0
+offset_top = 31.0
+offset_right = 1137.0
+offset_bottom = 119.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -63,11 +76,16 @@ vertical_alignment = 1
 metadata/_edit_lock_ = true
 
 [node name="OpponentScore" type="Label" parent="UserInterface"]
-layout_mode = 2
-offset_left = 181.5
-offset_top = 62.0
-offset_right = 221.5
-offset_bottom = 150.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 781.5
+offset_top = 31.0
+offset_right = 821.5
+offset_bottom = 119.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "0"
@@ -83,16 +101,12 @@ metadata/_edit_lock_ = true
 
 [node name="Bodies" type="Node2D" parent="."]
 
-[node name="Player" parent="Bodies" instance=ExtResource("1_dftgt")]
+[node name="Player" parent="Bodies" instance=ExtResource("3_receg")]
 position = Vector2(1720, 540)
 metadata/_edit_lock_ = true
 
-[node name="Opponent" parent="Bodies" instance=ExtResource("2_mtjjd")]
+[node name="Opponent" parent="Bodies" instance=ExtResource("4_pd3v8")]
 position = Vector2(200, 540)
-metadata/_edit_lock_ = true
-
-[node name="Ball" parent="Bodies" instance=ExtResource("3_g5k72")]
-position = Vector2(960, 540)
 metadata/_edit_lock_ = true
 
 [node name="Camera" type="Camera2D" parent="."]
@@ -122,6 +136,42 @@ shape = SubResource("RectangleShape2D_k22ss")
 [node name="OpponentGoal" type="CollisionShape2D" parent="Arena/OpponentGoal" groups=["OpponentGoal"]]
 position = Vector2(0, 540)
 shape = SubResource("RectangleShape2D_a0q41")
+
+[node name="PauseMenu" type="CanvasLayer" parent="."]
+process_mode = 3
+visible = false
+script = ExtResource("5_6i4jm")
+
+[node name="Label" type="Label" parent="PauseMenu"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -0.5
+offset_top = -211.5
+offset_right = 0.5
+offset_bottom = -188.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Game Paused"
+label_settings = SubResource("LabelSettings_d1vyl")
+
+[node name="Label2" type="Label" parent="PauseMenu"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -139.5
+offset_top = -122.5
+offset_right = 139.5
+offset_bottom = -77.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Escape to Resume
+"
+label_settings = SubResource("LabelSettings_bu5ly")
 
 [connection signal="body_entered" from="Arena/PlayerGoal" to="." method="_player_goal_entered"]
 [connection signal="body_entered" from="Arena/OpponentGoal" to="." method="_opponent_goal_entered"]

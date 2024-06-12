@@ -1,0 +1,133 @@
+[gd_scene load_steps=13 format=3 uid="uid://bppoi5lwfblum"]
+
+[ext_resource type="Script" path="res://Scripts/World.gd" id="1_v0ssh"]
+[ext_resource type="PackedScene" uid="uid://dra2jlmtcrtsn" path="res://Scenes/Ball.tscn" id="2_pp45c"]
+[ext_resource type="PackedScene" uid="uid://d2l5wrs0wnmd3" path="res://Scenes/Player.tscn" id="3_xtoph"]
+[ext_resource type="PackedScene" uid="uid://di2ycuc1e08hd" path="res://Scenes/Opponent.tscn" id="4_dr876"]
+
+[sub_resource type="Gradient" id="Gradient_peikh"]
+offsets = PackedFloat32Array(0.454545)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mkvyb"]
+gradient = SubResource("Gradient_peikh")
+
+[sub_resource type="LabelSettings" id="LabelSettings_vb37c"]
+font_size = 64
+
+[sub_resource type="LabelSettings" id="LabelSettings_to7fw"]
+font_size = 64
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lkbp7"]
+size = Vector2(1920, 3)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_axpt1"]
+size = Vector2(1920, 3)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k22ss"]
+size = Vector2(3, 1080)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_a0q41"]
+size = Vector2(3, 1080)
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_v0ssh")
+BallNode = ExtResource("2_pp45c")
+
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+metadata/_edit_lock_ = true
+
+[node name="Background" type="TextureRect" parent="UserInterface"]
+layout_mode = 2
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = SubResource("GradientTexture2D_mkvyb")
+metadata/_edit_lock_ = true
+
+[node name="PlayerScore" type="Label" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 781.5
+offset_top = 31.0
+offset_right = 818.5
+offset_bottom = 119.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "0"
+label_settings = SubResource("LabelSettings_vb37c")
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="OpponentScore" type="Label" parent="UserInterface"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 1100.0
+offset_top = 31.0
+offset_right = 1140.0
+offset_bottom = 119.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "0"
+label_settings = SubResource("LabelSettings_to7fw")
+metadata/_edit_lock_ = true
+
+[node name="Line2D" type="Line2D" parent="UserInterface"]
+position = Vector2(960, 0)
+points = PackedVector2Array(0, 0, 0, 1080)
+width = 1.0
+joint_mode = 2
+metadata/_edit_lock_ = true
+
+[node name="Bodies" type="Node2D" parent="."]
+
+[node name="Player" parent="Bodies" instance=ExtResource("3_xtoph")]
+position = Vector2(1720, 540)
+metadata/_edit_lock_ = true
+
+[node name="Opponent" parent="Bodies" instance=ExtResource("4_dr876")]
+position = Vector2(200, 540)
+metadata/_edit_lock_ = true
+
+[node name="Camera" type="Camera2D" parent="."]
+anchor_mode = 0
+metadata/_edit_lock_ = true
+
+[node name="Arena" type="Node2D" parent="."]
+
+[node name="GameWalls" type="StaticBody2D" parent="Arena"]
+
+[node name="TopWall" type="CollisionShape2D" parent="Arena/GameWalls"]
+position = Vector2(960, 0)
+shape = SubResource("RectangleShape2D_lkbp7")
+
+[node name="BottomWall" type="CollisionShape2D" parent="Arena/GameWalls"]
+position = Vector2(960, 1080)
+shape = SubResource("RectangleShape2D_axpt1")
+
+[node name="PlayerGoal" type="Area2D" parent="Arena"]
+
+[node name="PlayerGoal" type="CollisionShape2D" parent="Arena/PlayerGoal" groups=["PlayeerGoal"]]
+position = Vector2(1920, 540)
+shape = SubResource("RectangleShape2D_k22ss")
+
+[node name="OpponentGoal" type="Area2D" parent="Arena"]
+
+[node name="OpponentGoal" type="CollisionShape2D" parent="Arena/OpponentGoal" groups=["OpponentGoal"]]
+position = Vector2(0, 540)
+shape = SubResource("RectangleShape2D_a0q41")
+
+[connection signal="body_entered" from="Arena/PlayerGoal" to="." method="_player_goal_entered"]
+[connection signal="body_entered" from="Arena/OpponentGoal" to="." method="_opponent_goal_entered"]

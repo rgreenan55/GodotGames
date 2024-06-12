@@ -11,21 +11,26 @@ extends Node2D
 var GoalOnPlayer : int = 0;
 var GoalOnOpponent : int = 0;
 
-func reset_game(body : PhysicsBody2D) -> void:
-	body.queue_free()
+func _ready() -> void:
+	reset_game()
+
+func reset_game() -> void:
 	var Ball = BallNode.instantiate();
 	Ball.position = $Camera.get_screen_center_position();
+	$Bodies/Opponent.ball = Ball;
 	$Bodies.call_deferred("add_child", Ball);
 
 func _player_goal_entered(body : PhysicsBody2D) -> void:
 	if (body.is_in_group("Ball")):
 		GoalOnPlayer += 1;
 		OpponentScoreLabel.text = str(GoalOnPlayer);
-		reset_game(body);
+		body.queue_free()
+		reset_game();
 
 func _opponent_goal_entered(body : PhysicsBody2D) -> void:
 	if (body.is_in_group("Ball")):
 		GoalOnOpponent += 1;
 		PlayerScoreLabel.text = str(GoalOnOpponent);
-		reset_game(body);
+		body.queue_free()
+		reset_game();
 

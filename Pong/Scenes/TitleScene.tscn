@@ -1,0 +1,63 @@
+[gd_scene load_steps=5 format=3 uid="uid://bs16huiv176js"]
+
+[ext_resource type="Script" path="res://Scripts/TitleScene.gd" id="1_1gglt"]
+
+[sub_resource type="Gradient" id="Gradient_peikh"]
+offsets = PackedFloat32Array(0.454545)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_yw111"]
+gradient = SubResource("Gradient_peikh")
+
+[sub_resource type="LabelSettings" id="LabelSettings_rx5lf"]
+font_size = 64
+
+[node name="TitleScene" type="Node2D"]
+script = ExtResource("1_1gglt")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Background" type="TextureRect" parent="Control"]
+offset_right = 1920.0
+offset_bottom = 1080.0
+texture = SubResource("GradientTexture2D_yw111")
+metadata/_edit_lock_ = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Title" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -211.5
+offset_right = 20.0
+offset_bottom = -188.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Pong"
+label_settings = SubResource("LabelSettings_rx5lf")
+
+[node name="PlayButton" type="Button" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -25.0
+offset_right = 50.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+text = "Play"
+
+[connection signal="pressed" from="CanvasLayer/PlayButton" to="." method="_on_play_button_pressed"]
