@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://dytpq0ns5qjcq"]
+
+[ext_resource type="Script" path="res://Scripts/Player.gd" id="1_sdtbl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gbg51"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_dpcl7"]
+size = Vector3(20, 20, 1)
+
+[sub_resource type="Gradient" id="Gradient_y7bfn"]
+offsets = PackedFloat32Array(0.452096)
+colors = PackedColorArray(1, 0.518123, 0.45217, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ptmt4"]
+gradient = SubResource("Gradient_y7bfn")
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+script = ExtResource("1_sdtbl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_gbg51")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+mesh = SubResource("BoxMesh_dpcl7")
+texture = SubResource("GradientTexture2D_ptmt4")

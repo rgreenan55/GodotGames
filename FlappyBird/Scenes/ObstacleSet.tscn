@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://djw2tsl1jhe0i"]
+
+[ext_resource type="Script" path="res://Scripts/ObstacleSet.gd" id="1_eyuxy"]
+[ext_resource type="PackedScene" uid="uid://ds3445uso1vo5" path="res://Scenes/Obstacle.tscn" id="1_muyua"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8df7a"]
+size = Vector2(10, 720)
+
+[node name="ObstacleSet" type="Area2D" groups=["ObstacleSetGoal"]]
+script = ExtResource("1_eyuxy")
+
+[node name="TopObstacle" parent="." instance=ExtResource("1_muyua")]
+scale = Vector2(1, -2.75)
+
+[node name="BottomObstacle" parent="." instance=ExtResource("1_muyua")]
+
+[node name="GoalCollision" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_8df7a")
+
+[connection signal="body_entered" from="." to="." method="_body_entered_goal"]
+[connection signal="body_entered" from="TopObstacle" to="." method="_body_entered_obstacle"]
+[connection signal="body_entered" from="BottomObstacle" to="." method="_body_entered_obstacle"]

@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://bk6m3mju7spqc"]
+
+[ext_resource type="Texture2D" uid="uid://dxx0ofi04ukko" path="res://clouds.png" id="1_wjxv7"]
+[ext_resource type="Script" path="res://Scenes/Cloud.gd" id="2_lyh6y"]
+
+[node name="Cloud" type="Sprite2D"]
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("1_wjxv7")
+region_enabled = true
+region_rect = Rect2(96, 760, 2816, 1416)
+script = ExtResource("2_lyh6y")

@@ -1,0 +1,52 @@
+[gd_scene load_steps=8 format=3 uid="uid://dtnatxc7ibvff"]
+
+[ext_resource type="Script" path="res://World.gd" id="1_rwxkc"]
+[ext_resource type="PackedScene" uid="uid://dytpq0ns5qjcq" path="res://Player.tscn" id="1_wpis0"]
+[ext_resource type="PackedScene" uid="uid://djw2tsl1jhe0i" path="res://ObstacleSet.tscn" id="2_icbxp"]
+[ext_resource type="Script" path="res://ObstacleCollector.gd" id="4_f31a1"]
+
+[sub_resource type="Gradient" id="Gradient_u76m0"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.392103, 0.582538, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_uq7je"]
+gradient = SubResource("Gradient_u76m0")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8yo1q"]
+size = Vector2(50, 720)
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_rwxkc")
+ObstacleSetScene = ExtResource("2_icbxp")
+
+[node name="UserInterface" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="UserInterface"]
+layout_mode = 0
+offset_right = 1280.0
+offset_bottom = 720.0
+texture = SubResource("GradientTexture2D_uq7je")
+
+[node name="Player" parent="." instance=ExtResource("1_wpis0")]
+position = Vector2(124, 604)
+
+[node name="SpawnObstacleTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true
+
+[node name="ObstacleCollector" type="Area2D" parent="."]
+script = ExtResource("4_f31a1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ObstacleCollector"]
+position = Vector2(-25, 360)
+shape = SubResource("RectangleShape2D_8yo1q")
+
+[connection signal="timeout" from="SpawnObstacleTimer" to="." method="_spawn_obstacle"]
+[connection signal="area_entered" from="ObstacleCollector" to="ObstacleCollector" method="_on_area_entered"]

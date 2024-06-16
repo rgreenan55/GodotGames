@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://ds3445uso1vo5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7e8r4"]
+size = Vector2(50, 100)
+
+[sub_resource type="BoxMesh" id="BoxMesh_j75yw"]
+size = Vector3(50, 100, 1)
+
+[sub_resource type="Gradient" id="Gradient_frdeb"]
+offsets = PackedFloat32Array(0.613772)
+colors = PackedColorArray(0, 0.325331, 1.92523e-07, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_cnfuh"]
+gradient = SubResource("Gradient_frdeb")
+
+[node name="Obstacle" type="Area2D" groups=["Obstacle"]]
+scale = Vector2(1, 2.75)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -50)
+shape = SubResource("RectangleShape2D_7e8r4")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+position = Vector2(0, -50)
+mesh = SubResource("BoxMesh_j75yw")
+texture = SubResource("GradientTexture2D_cnfuh")
