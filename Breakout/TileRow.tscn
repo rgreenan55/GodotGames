@@ -1,0 +1,43 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6dt8g2ui5rgd"]
+
+[ext_resource type="Script" path="res://Scripts/TileRow.gd" id="1_ge46x"]
+[ext_resource type="PackedScene" uid="uid://c5jpe2j7yfqdb" path="res://Tile.tscn" id="1_tyxfl"]
+
+[node name="TileRow" type="Node2D"]
+script = ExtResource("1_ge46x")
+
+[node name="Tile" parent="." instance=ExtResource("1_tyxfl")]
+position = Vector2(-220, 0)
+
+[node name="Tile2" parent="." instance=ExtResource("1_tyxfl")]
+position = Vector2(-180, 0)
+
+[node name="Tile3" parent="." instance=ExtResource("1_tyxfl")]
+position = Vector2(-140, 0)
+
+[node name="Tile4" parent="." instance=ExtResource("1_tyxfl")]
+position = Vector2(-100, 0)
+
+[node name="Tile5" parent="." instance=ExtResource("1_tyxfl")]
+position = Vector2(-60, 0)
+
+[node name="Tile6" parent="." instance=ExtResource("1_tyxfl")]
+position = Vector2(-20, 0)
+
+[node name="Tile7" parent="." instance=ExtResource("1_tyxfl")]
+position = Vector2(20, 0)
+
+[node name="Tile8" parent="." instance=ExtResource("1_tyxfl")]
+position = Vector2(60, 0)
+
+[node name="Tile9" parent="." instance=ExtResource("1_tyxfl")]
+position = Vector2(100, 0)
+
+[node name="Tile10" parent="." instance=ExtResource("1_tyxfl")]
+position = Vector2(140, 0)
+
+[node name="Tile11" parent="." instance=ExtResource("1_tyxfl")]
+position = Vector2(180, 0)
+
+[node name="Tile12" parent="." instance=ExtResource("1_tyxfl")]
+position = Vector2(220, 0)

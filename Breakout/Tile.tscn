@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://c5jpe2j7yfqdb"]
+
+[ext_resource type="Texture2D" uid="uid://27by3p3lsqvo" path="res://Assets/white.jpg" id="1_rgs2c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gijis"]
+size = Vector2(36, 12)
+
+[node name="Tile" type="StaticBody2D" groups=["Tile"]]
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_gijis")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_rgs2c")
+region_enabled = true
+region_rect = Rect2(10, 10, 36, 12)

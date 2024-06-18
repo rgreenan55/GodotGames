@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://bajrtrqs6rwf0"]
+
+[ext_resource type="Script" path="res://Scripts/Ball.gd" id="1_c1j4g"]
+[ext_resource type="Texture2D" uid="uid://bv3yn6gdymw8k" path="res://Assets/circle.png" id="2_j7pio"]
+[ext_resource type="AudioStream" uid="uid://n8gruphqht70" path="res://Assets/ball_bounce.wav" id="3_quaea"]
+[ext_resource type="AudioStream" uid="uid://r4gweo6dyb50" path="res://Assets/tile_break.wav" id="4_ha1y1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jo7uy"]
+radius = 5.0
+
+[node name="Ball" type="CharacterBody2D" groups=["Ball"]]
+script = ExtResource("1_c1j4g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_jo7uy")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.045, 0.045)
+texture = ExtResource("2_j7pio")
+region_rect = Rect2(10, 10, 10, 10)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+autostart = true
+
+[node name="BounceAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_quaea")
+
+[node name="TileAudio" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_ha1y1")
+
+[connection signal="timeout" from="Timer" to="." method="set_direction"]
