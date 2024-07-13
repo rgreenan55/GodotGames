@@ -1,0 +1,122 @@
+[gd_scene load_steps=10 format=3 uid="uid://di26nyqee1hp4"]
+
+[ext_resource type="Script" path="res://Entities/Player/Player.gd" id="1_6ycbh"]
+[ext_resource type="Texture2D" uid="uid://c3e22378vebit" path="res://Entities/Player/bird.png" id="2_65pq3"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gv6gg"]
+height = 20.0
+
+[sub_resource type="Animation" id="Animation_e5sno"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [50]
+}
+
+[sub_resource type="Animation" id="Animation_fo1jm"]
+resource_name = "dying"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 2, 0, 3, 4, 5, 6, 7, 8, 9]
+}
+
+[sub_resource type="Animation" id="Animation_67n34"]
+resource_name = "flying"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [70, 71, 72, 73]
+}
+
+[sub_resource type="Animation" id="Animation_j86od"]
+resource_name = "running"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [50, 51, 52, 53, 54, 55, 56, 57]
+}
+
+[sub_resource type="Animation" id="Animation_8kuqg"]
+resource_name = "starting"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4, 1.6, 1.8, 2, 2.2, 2.4, 2.6, 2.8, 3, 3.2, 3.4, 3.6, 3.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [30, 31, 32, 33, 34, 35, 36, 37, 10, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eeara"]
+_data = {
+"RESET": SubResource("Animation_e5sno"),
+"dying": SubResource("Animation_fo1jm"),
+"flying": SubResource("Animation_67n34"),
+"running": SubResource("Animation_j86od"),
+"starting": SubResource("Animation_8kuqg")
+}
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+script = ExtResource("1_6ycbh")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_gv6gg")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -1)
+texture = ExtResource("2_65pq3")
+hframes = 10
+vframes = 9
+frame = 50
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
+libraries = {
+"": SubResource("AnimationLibrary_eeara")
+}
+
+[node name="ObstacleDetector" type="Area2D" parent="."]
+
+[node name="CollisionShape" type="CollisionShape2D" parent="ObstacleDetector"]
+shape = SubResource("CapsuleShape2D_gv6gg")
+
+[connection signal="area_entered" from="ObstacleDetector" to="." method="on_area_entered"]

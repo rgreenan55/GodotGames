@@ -1,0 +1,58 @@
+[gd_scene load_steps=6 format=3 uid="uid://dqhasi7m264y8"]
+
+[ext_resource type="Script" path="res://Scenes/Title.gd" id="1_8b8s0"]
+[ext_resource type="PackedScene" uid="uid://cr2abdgw1i74a" path="res://Backgrounds/Woods.tscn" id="1_pbwgu"]
+[ext_resource type="AudioStream" uid="uid://cf802fydbs3cg" path="res://Assets/Music/TitleMusic.mp3" id="2_i7mov"]
+[ext_resource type="Theme" uid="uid://bdr7gvat2a8b6" path="res://Styles/ButtonStyle.tres" id="2_w6wh5"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_s8isc"]
+font_size = 48
+shadow_size = 24
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="Title" type="Node2D"]
+script = ExtResource("1_8b8s0")
+
+[node name="UserInterface" type="CanvasLayer" parent="."]
+
+[node name="TitleLabel" type="Label" parent="UserInterface"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -111.5
+offset_top = -105.0
+offset_right = 111.5
+offset_bottom = -38.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Early Bird"
+label_settings = SubResource("LabelSettings_s8isc")
+
+[node name="PlayButton" type="Button" parent="UserInterface"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = 20.0
+offset_right = 50.0
+offset_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_w6wh5")
+text = "Play"
+
+[node name="Woods" parent="." instance=ExtResource("1_pbwgu")]
+scale = Vector2(2, 2)
+transform = Transform2D(2, 0, 0, 2, 0, 0)
+scrolling_speed = 0.0
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_i7mov")
+volume_db = -10.0
+autoplay = true
+
+[connection signal="pressed" from="UserInterface/PlayButton" to="." method="_on_play_pressed"]

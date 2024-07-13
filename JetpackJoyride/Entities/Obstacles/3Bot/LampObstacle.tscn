@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://c0518o3v71iss"]
+
+[ext_resource type="Texture2D" uid="uid://de1ty5751el7b" path="res://Assets/Obstacles/lamp.png" id="1_8ahyp"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fjd8q"]
+height = 56.0
+
+[node name="LampObstacle" type="Node2D"]
+
+[node name="LampArea" type="Area2D" parent="." groups=["Obstacle"]]
+scale = Vector2(2, 2)
+
+[node name="Lamp" type="Sprite2D" parent="LampArea"]
+position = Vector2(0, -28.5)
+texture = ExtResource("1_8ahyp")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="LampArea"]
+position = Vector2(0, -28)
+shape = SubResource("CapsuleShape2D_fjd8q")

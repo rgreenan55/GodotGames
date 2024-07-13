@@ -1,0 +1,213 @@
+[gd_scene load_steps=20 format=3 uid="uid://qmvdfuw1k524"]
+
+[ext_resource type="Script" path="res://Scenes/Game.gd" id="1_5fmf5"]
+[ext_resource type="PackedScene" uid="uid://di26nyqee1hp4" path="res://Entities/Player/Player.tscn" id="1_kbfmq"]
+[ext_resource type="PackedScene" uid="uid://cr2abdgw1i74a" path="res://Backgrounds/Woods.tscn" id="2_od7jr"]
+[ext_resource type="PackedScene" uid="uid://ngycbke54lc4" path="res://Entities/Obstacles/3Bot/RockObstacle.tscn" id="3_mv6lg"]
+[ext_resource type="PackedScene" uid="uid://djgj2ytrffhg6" path="res://Entities/Obstacles/1Top/BranchObstacle.tscn" id="3_pyyax"]
+[ext_resource type="PackedScene" uid="uid://de76h2kbj64fl" path="res://Entities/Worm/Worm.tscn" id="4_6hc11"]
+[ext_resource type="PackedScene" uid="uid://c0518o3v71iss" path="res://Entities/Obstacles/3Bot/LampObstacle.tscn" id="4_iye5x"]
+[ext_resource type="PackedScene" uid="uid://ck3bfnid16p8y" path="res://Entities/Obstacles/2Mid/CrowObstacle.tscn" id="4_xpgqf"]
+[ext_resource type="PackedScene" uid="uid://bl2ki7ggr0v4q" path="res://Entities/Obstacles/3Bot/SignObstacle.tscn" id="5_6e2t6"]
+[ext_resource type="Texture2D" uid="uid://d4b1b05ug0m2t" path="res://Assets/UserInterface/worm_icon.png" id="8_2r123"]
+[ext_resource type="AudioStream" uid="uid://b7i7ajo3j8i17" path="res://Assets/Music/GameMusic.mp3" id="9_0eki6"]
+[ext_resource type="Theme" uid="uid://bdr7gvat2a8b6" path="res://Styles/ButtonStyle.tres" id="9_ug37y"]
+[ext_resource type="AudioStream" uid="uid://ctfrod2ilhtfj" path="res://Assets/Sounds/gunshot.mp3" id="12_gidfi"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_elc4s"]
+font_size = 14
+font_color = Color(1, 0.839216, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_x2s18"]
+font_size = 32
+shadow_size = 16
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_s518c"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.333333, 0.192157, 0.109804, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rbkxl"]
+gradient = SubResource("Gradient_s518c")
+width = 640
+height = 10
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dyqdq"]
+size = Vector2(640, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ina03"]
+size = Vector2(640, 10)
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_5fmf5")
+worm_scene = ExtResource("4_6hc11")
+top_obstacle_options = Array[PackedScene]([ExtResource("3_pyyax")])
+mid_obstacle_options = Array[PackedScene]([ExtResource("4_xpgqf")])
+bot_obstacle_options = Array[PackedScene]([ExtResource("3_mv6lg"), ExtResource("4_iye5x"), ExtResource("5_6e2t6")])
+
+[node name="GameInterface" type="CanvasLayer" parent="."]
+
+[node name="GameUI" type="Control" parent="GameInterface"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Distance" type="Label" parent="GameInterface/GameUI"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 57.0
+offset_bottom = 30.0
+text = "0000m"
+
+[node name="Worms" type="Label" parent="GameInterface/GameUI"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 30.0
+offset_right = 39.0
+offset_bottom = 50.0
+text = "000"
+label_settings = SubResource("LabelSettings_elc4s")
+
+[node name="TextureRect" type="TextureRect" parent="GameInterface/GameUI"]
+layout_mode = 0
+offset_left = 3.0
+offset_top = 33.0
+offset_right = 263.0
+offset_bottom = 313.0
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("8_2r123")
+
+[node name="GameOver" type="Control" parent="GameInterface"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameOverLabel" type="Label" parent="GameInterface/GameOver"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.5
+offset_top = -60.0
+offset_right = 43.5
+offset_bottom = -37.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Game Over"
+label_settings = SubResource("LabelSettings_x2s18")
+
+[node name="RetryButton" type="Button" parent="GameInterface/GameOver"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -112.5
+offset_top = 20.0
+offset_right = -37.5
+offset_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("9_ug37y")
+text = "Retry
+"
+
+[node name="ExitButton" type="Button" parent="GameInterface/GameOver"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 37.5
+offset_top = 20.0
+offset_right = 112.5
+offset_bottom = 51.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("9_ug37y")
+text = "Exit"
+
+[node name="Terrain" type="Node" parent="."]
+
+[node name="Woods" parent="Terrain" instance=ExtResource("2_od7jr")]
+scale = Vector2(2, 2)
+transform = Transform2D(2, 0, 0, 2, 0, 0)
+scrolling_speed = 0.0
+
+[node name="Floor" type="StaticBody2D" parent="Terrain"]
+position = Vector2(320, 360)
+
+[node name="FloorSprite" type="Sprite2D" parent="Terrain/Floor"]
+texture = SubResource("GradientTexture2D_rbkxl")
+
+[node name="FloorCollisionShape" type="CollisionShape2D" parent="Terrain/Floor"]
+visible = false
+shape = SubResource("RectangleShape2D_dyqdq")
+
+[node name="Ceiling" type="StaticBody2D" parent="Terrain"]
+position = Vector2(320, -2.5)
+
+[node name="CeilingCollisionShape" type="CollisionShape2D" parent="Terrain/Ceiling"]
+visible = false
+shape = SubResource("RectangleShape2D_ina03")
+
+[node name="Audio" type="Node" parent="."]
+
+[node name="Music" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("9_0eki6")
+volume_db = -10.0
+autoplay = true
+
+[node name="GunNoise" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("12_gidfi")
+volume_db = -5.0
+autoplay = true
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="WormTimer" type="Timer" parent="Timers"]
+wait_time = 4.0
+one_shot = true
+
+[node name="ScoreTimer" type="Timer" parent="Timers"]
+
+[node name="ObstacleTimer" type="Timer" parent="Timers"]
+wait_time = 1.5
+
+[node name="ObstacleSpawns" type="Node2D" parent="."]
+
+[node name="TopSpawn" type="Node2D" parent="ObstacleSpawns"]
+position = Vector2(680, 0)
+metadata/_edit_lock_ = true
+
+[node name="MidSpawn" type="Node2D" parent="ObstacleSpawns"]
+position = Vector2(680, 170)
+metadata/_edit_lock_ = true
+
+[node name="BotSpawn" type="Node2D" parent="ObstacleSpawns"]
+position = Vector2(680, 355)
+metadata/_edit_lock_ = true
+
+[node name="Obstacles" type="Node2D" parent="."]
+
+[node name="Worms" type="Node2D" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("1_kbfmq")]
+position = Vector2(100, 345)
+metadata/_edit_lock_ = true
+
+[connection signal="pressed" from="GameInterface/GameOver/RetryButton" to="." method="on_retry_button_pressed"]
+[connection signal="pressed" from="GameInterface/GameOver/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="timeout" from="Timers/WormTimer" to="." method="spawn_worm"]
+[connection signal="timeout" from="Timers/ScoreTimer" to="." method="increase_distance"]
+[connection signal="timeout" from="Timers/ObstacleTimer" to="." method="spawn_obstacle"]

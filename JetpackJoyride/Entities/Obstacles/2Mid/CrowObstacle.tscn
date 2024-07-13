@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=3 uid="uid://ck3bfnid16p8y"]
+
+[ext_resource type="Texture2D" uid="uid://dodudhd6r8gxf" path="res://Assets/Obstacles/crow.png" id="1_qu805"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o8iwc"]
+atlas = ExtResource("1_qu805")
+region = Rect2(275, 387, 50, 28)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xeyqb"]
+atlas = ExtResource("1_qu805")
+region = Rect2(330, 387, 50, 43)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7ud5s"]
+atlas = ExtResource("1_qu805")
+region = Rect2(279, 416, 50, 50)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_clvdv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o8iwc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xeyqb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ud5s")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_om6ud"]
+radius = 7.0
+height = 42.0
+
+[node name="CrowObstacle" type="Node2D"]
+
+[node name="CrowArea" type="Area2D" parent="." groups=["Obstacle"]]
+
+[node name="Crow" type="AnimatedSprite2D" parent="CrowArea"]
+sprite_frames = SubResource("SpriteFrames_clvdv")
+autoplay = "default"
+frame = 1
+frame_progress = 0.2523
+flip_h = true
+
+[node name="CollisionShape" type="CollisionShape2D" parent="CrowArea"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_om6ud")

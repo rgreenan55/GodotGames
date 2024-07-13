@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://bl2ki7ggr0v4q"]
+
+[ext_resource type="Texture2D" uid="uid://bk46buukrt4sj" path="res://Assets/Obstacles/sign.png" id="1_gn8ep"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sy8e5"]
+radius = 8.0
+
+[node name="SignObstacle" type="Node2D"]
+
+[node name="SignArea" type="Area2D" parent="." groups=["Obstacle"]]
+scale = Vector2(1.5, 1.5)
+
+[node name="Sign" type="Sprite2D" parent="SignArea"]
+position = Vector2(0, -15.5)
+texture = ExtResource("1_gn8ep")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="SignArea"]
+position = Vector2(0, -15)
+shape = SubResource("CapsuleShape2D_sy8e5")

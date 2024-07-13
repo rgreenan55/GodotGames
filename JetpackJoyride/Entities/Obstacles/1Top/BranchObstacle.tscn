@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://djgj2ytrffhg6"]
+
+[ext_resource type="Texture2D" uid="uid://io26aby0ral4" path="res://Assets/Obstacles/branch.png" id="1_j5eiw"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v7quf"]
+radius = 36.0
+height = 416.0
+
+[node name="BranchObstacle" type="Node2D"]
+scale = Vector2(0.25, 0.25)
+
+[node name="BranchArea" type="Area2D" parent="." groups=["Obstacle"]]
+
+[node name="Branch" type="Sprite2D" parent="BranchArea"]
+position = Vector2(-41, 333)
+rotation = 1.5708
+texture = ExtResource("1_j5eiw")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="BranchArea"]
+position = Vector2(0, 208)
+shape = SubResource("CapsuleShape2D_v7quf")

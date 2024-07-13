@@ -1,0 +1,73 @@
+[gd_scene load_steps=9 format=3 uid="uid://qmvdfuw1k524"]
+
+[ext_resource type="Script" path="res://Game.gd" id="1_5fmf5"]
+[ext_resource type="PackedScene" uid="uid://di26nyqee1hp4" path="res://Entities/Player/Player.tscn" id="1_kbfmq"]
+[ext_resource type="PackedScene" uid="uid://cr2abdgw1i74a" path="res://Scenes/Woods.tscn" id="2_od7jr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_elc4s"]
+font_size = 14
+font_color = Color(1, 0.839216, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_s518c"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(0.333333, 0.192157, 0.109804, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_rbkxl"]
+gradient = SubResource("Gradient_s518c")
+width = 640
+height = 10
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dyqdq"]
+size = Vector2(640, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ina03"]
+size = Vector2(640, 10)
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_5fmf5")
+
+[node name="GameInterface" type="CanvasLayer" parent="."]
+
+[node name="Distance" type="Label" parent="GameInterface"]
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 48.0
+offset_bottom = 30.0
+text = "000m"
+
+[node name="Coins" type="Label" parent="GameInterface"]
+offset_left = 5.0
+offset_top = 30.0
+offset_right = 29.0
+offset_bottom = 50.0
+text = "000"
+label_settings = SubResource("LabelSettings_elc4s")
+
+[node name="ScoreTimer" type="Timer" parent="GameInterface"]
+autostart = true
+
+[node name="Terrain" type="Node" parent="."]
+
+[node name="Woods" parent="Terrain" instance=ExtResource("2_od7jr")]
+scale = Vector2(2, 2)
+transform = Transform2D(2, 0, 0, 2, 0, 0)
+
+[node name="Floor" type="StaticBody2D" parent="Terrain"]
+position = Vector2(320, 360)
+
+[node name="FloorSprite" type="Sprite2D" parent="Terrain/Floor"]
+texture = SubResource("GradientTexture2D_rbkxl")
+
+[node name="FloorCollisionShape" type="CollisionShape2D" parent="Terrain/Floor"]
+shape = SubResource("RectangleShape2D_dyqdq")
+
+[node name="Ceiling" type="StaticBody2D" parent="Terrain"]
+position = Vector2(320, -2.5)
+
+[node name="CeilingCollisionShape" type="CollisionShape2D" parent="Terrain/Ceiling"]
+shape = SubResource("RectangleShape2D_ina03")
+
+[node name="Player" parent="." instance=ExtResource("1_kbfmq")]
+position = Vector2(100, 300)
+
+[connection signal="timeout" from="GameInterface/ScoreTimer" to="." method="increase_distance"]

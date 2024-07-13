@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://ngycbke54lc4"]
+
+[ext_resource type="Texture2D" uid="uid://bwxtnj53ax0ef" path="res://Assets/Obstacles/rock_2.png" id="1_5y6j4"]
+[ext_resource type="Texture2D" uid="uid://m4dfuej1clhm" path="res://Assets/Obstacles/rock_3.png" id="2_ebty5"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_j3w1w"]
+height = 52.0
+
+[node name="RockObstacle" type="Node2D"]
+
+[node name="RockArea" type="Area2D" parent="." groups=["Obstacle"]]
+position = Vector2(0, -10)
+
+[node name="Rock1" type="Sprite2D" parent="RockArea"]
+position = Vector2(6.5, -6)
+texture = ExtResource("1_5y6j4")
+
+[node name="Rock2" type="Sprite2D" parent="RockArea"]
+position = Vector2(-13.5, 1)
+texture = ExtResource("2_ebty5")
+
+[node name="Rock3" type="Sprite2D" parent="RockArea"]
+position = Vector2(-3.5, -7)
+texture = ExtResource("2_ebty5")
+
+[node name="Rock4" type="Sprite2D" parent="RockArea"]
+position = Vector2(8.5, 1)
+texture = ExtResource("2_ebty5")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="RockArea"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_j3w1w")

@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://cr2abdgw1i74a"]
+
+[ext_resource type="Script" path="res://Backgrounds/Woods.gd" id="1_434rt"]
+[ext_resource type="Texture2D" uid="uid://4foufy1lltd7" path="res://Assets/Backgrounds/background_layer_1.png" id="1_l0dmm"]
+[ext_resource type="Texture2D" uid="uid://15nfwu7mk5dl" path="res://Assets/Backgrounds/background_layer_2.png" id="2_lgsim"]
+[ext_resource type="Texture2D" uid="uid://nxbhq7neledy" path="res://Assets/Backgrounds/background_layer_3.png" id="3_obvdv"]
+
+[node name="Woods" type="ParallaxBackground"]
+script = ExtResource("1_434rt")
+scrolling_speed = 0.75
+
+[node name="BackgroundLayer" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.5, 0.5)
+motion_mirroring = Vector2(320, 0)
+
+[node name="Background" type="TextureRect" parent="BackgroundLayer"]
+offset_right = 320.0
+offset_bottom = 180.0
+texture = ExtResource("1_l0dmm")
+
+[node name="MiddlegroundLayer" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.75, 0.75)
+motion_mirroring = Vector2(320, 0)
+
+[node name="Middleground" type="TextureRect" parent="MiddlegroundLayer"]
+offset_right = 320.0
+offset_bottom = 180.0
+texture = ExtResource("2_lgsim")
+
+[node name="ForegroundLayer" type="ParallaxLayer" parent="."]
+motion_mirroring = Vector2(320, 0)
+
+[node name="Foreground" type="TextureRect" parent="ForegroundLayer"]
+offset_right = 320.0
+offset_bottom = 180.0
+texture = ExtResource("3_obvdv")
