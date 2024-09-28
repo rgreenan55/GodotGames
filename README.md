@@ -1,7 +1,6 @@
 # Welcome
 
-#### This is a repository collection of small games I've created in order to practice and build skills within the Godot Engine.
-#### I have been following a web challenge that provides games to copy that scale in difficulty.
+This is collection of small sized games in order to develop skills within the Godot Engine.
 
 
 # How to Play?
