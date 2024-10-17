@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=3 uid="uid://hvqhoq1rn413"]
+
+[ext_resource type="PackedScene" uid="uid://uleguahrexov" path="res://player/Player.tscn" id="1_7t1lm"]
+[ext_resource type="Script" path="res://scenes/EnemySpawnArea.gd" id="2_32cy4"]
+
+[sub_resource type="Gradient" id="Gradient_ua1g8"]
+offsets = PackedFloat32Array(0.385093)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_n35ga"]
+gradient = SubResource("Gradient_ua1g8")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k1saa"]
+size = Vector2(576, 192)
+
+[node name="Stage" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_n35ga")
+
+[node name="Player" parent="." instance=ExtResource("1_7t1lm")]
+position = Vector2(320, 340)
+
+[node name="Disposables" type="Node2D" parent="."]
+
+[node name="PlayerLasers" type="Node2D" parent="Disposables"]
+
+[node name="EnemyLasers" type="Node2D" parent="Disposables"]
+
+[node name="Other" type="Node2D" parent="Disposables"]
+
+[node name="EnemySpawnArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("2_32cy4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemySpawnArea"]
+position = Vector2(320, 128)
+shape = SubResource("RectangleShape2D_k1saa")

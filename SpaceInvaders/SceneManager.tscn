@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://cwanj487i5e53"]
+
+[ext_resource type="Script" path="res://SceneManager.gd" id="1_bj83n"]
+[ext_resource type="PackedScene" uid="uid://hvqhoq1rn413" path="res://scenes/Stage.tscn" id="2_0d3gh"]
+[ext_resource type="PackedScene" uid="uid://dfqrvgal1pbau" path="res://scenes/TitleScreen.tscn" id="2_bb7r4"]
+[ext_resource type="AudioStream" uid="uid://cjn8if7ojee7g" path="res://assets/arcade_music.mp3" id="4_54v4g"]
+
+[node name="SceneManager" type="Node2D"]
+script = ExtResource("1_bj83n")
+stage_scene = ExtResource("2_0d3gh")
+title_scene = ExtResource("2_bb7r4")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+process_mode = 3
+stream = ExtResource("4_54v4g")
+volume_db = -10.0
+autoplay = true

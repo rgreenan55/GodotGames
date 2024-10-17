@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=3 uid="uid://4nuo1b5u3asd"]
+
+[ext_resource type="Script" path="res://enemies/GeneralEnemy.gd" id="1_ljsf0"]
+[ext_resource type="Texture2D" uid="uid://0w7uk87bjmp2" path="res://assets/EnemyAssets.png" id="2_gab4n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6ropi"]
+size = Vector2(16, 10)
+
+[node name="GeneralEnemy" type="Node2D" groups=["Enemy"]]
+script = ExtResource("1_ljsf0")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -8)
+texture = ExtResource("2_gab4n")
+hframes = 2
+vframes = 5
+
+[node name="CollisionArea" type="Area2D" parent="." groups=["Enemy"]]
+collision_layer = 4
+collision_mask = 8
+
+[node name="CollisionShape" type="CollisionShape2D" parent="CollisionArea"]
+position = Vector2(0, -5)
+shape = SubResource("RectangleShape2D_6ropi")
+
+[node name="DeathParticles" type="CPUParticles2D" parent="."]
+position = Vector2(0, -5)
+emitting = false
+amount = 30
+lifetime = 0.25
+one_shot = true
+explosiveness = 1.0
+emission_shape = 2
+emission_sphere_radius = 1.0
+direction = Vector2(0, -1)
+spread = 120.0
+gravity = Vector2(0, -300)
+initial_velocity_min = 15.0
+initial_velocity_max = 30.0
+scale_amount_min = 0.25
+color = Color(1, 0.223529, 0.219608, 1)
+
+[connection signal="body_entered" from="CollisionArea" to="." method="_on_collision_area_body_entered"]

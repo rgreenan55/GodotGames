@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://c8u3hb2dq7c2q"]
+
+[ext_resource type="Script" path="res://ui/ScoreAdder.gd" id="1_2oxbq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_yfgxf"]
+font_size = 8
+
+[node name="ScoreAdder" type="Label"]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+label_settings = SubResource("LabelSettings_yfgxf")
+horizontal_alignment = 2
+script = ExtResource("1_2oxbq")
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://uleguahrexov"]
+
+[ext_resource type="Texture2D" uid="uid://7lb4q1sncui5" path="res://assets/PlayerAssets.png" id="1_jx2eh"]
+[ext_resource type="Script" path="res://player/Player.gd" id="1_wgn5n"]
+[ext_resource type="PackedScene" uid="uid://bwx5buw4xtch" path="res://player/PlayerLaser.tscn" id="2_cemvq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fjgae"]
+size = Vector2(10, 9)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qhlgu"]
+size = Vector2(10, 9)
+
+[node name="Player" type="CharacterBody2D" groups=["Player"]]
+collision_layer = 2
+collision_mask = 21
+script = ExtResource("1_wgn5n")
+laser_scene = ExtResource("2_cemvq")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_jx2eh")
+hframes = 2
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_fjgae")
+
+[node name="AttackTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="CollisionArea" type="Area2D" parent="." groups=["Enemy"]]
+collision_layer = 2
+collision_mask = 16
+
+[node name="CollisionShape" type="CollisionShape2D" parent="CollisionArea"]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_qhlgu")

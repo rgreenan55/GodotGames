@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://qmvdfuw1k524"]
+[gd_scene load_steps=22 format=3 uid="uid://qmvdfuw1k524"]
 
 [ext_resource type="Script" path="res://Scenes/Game.gd" id="1_5fmf5"]
 [ext_resource type="PackedScene" uid="uid://di26nyqee1hp4" path="res://Entities/Player/Player.tscn" id="1_kbfmq"]
@@ -37,6 +37,11 @@ size = Vector2(640, 10)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ina03"]
 size = Vector2(640, 10)
+
+[sub_resource type="Gradient" id="Gradient_d55cl"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7k2y3"]
+gradient = SubResource("Gradient_d55cl")
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_5fmf5")
@@ -205,6 +210,12 @@ metadata/_edit_lock_ = true
 [node name="Player" parent="." instance=ExtResource("1_kbfmq")]
 position = Vector2(100, 345)
 metadata/_edit_lock_ = true
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(396.5, 218)
+scale = Vector2(4.14063, 2.8125)
+range_layer_min = -100
+texture = SubResource("GradientTexture2D_7k2y3")
 
 [connection signal="pressed" from="GameInterface/GameOver/RetryButton" to="." method="on_retry_button_pressed"]
 [connection signal="pressed" from="GameInterface/GameOver/ExitButton" to="." method="_on_exit_button_pressed"]

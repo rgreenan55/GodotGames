@@ -1,0 +1,254 @@
+[gd_scene load_steps=19 format=3 uid="uid://hvqhoq1rn413"]
+
+[ext_resource type="PackedScene" uid="uid://uleguahrexov" path="res://player/Player.tscn" id="1_7t1lm"]
+[ext_resource type="Script" path="res://scenes/Stage.gd" id="1_i8ms8"]
+[ext_resource type="Shader" path="res://ui/stars.gdshader" id="2_02mex"]
+[ext_resource type="Script" path="res://scenes/EnemySpawnArea.gd" id="2_32cy4"]
+[ext_resource type="Texture2D" uid="uid://dvsvttdmtllme" path="res://assets/LifeImage.png" id="2_ajoat"]
+[ext_resource type="PackedScene" uid="uid://4nuo1b5u3asd" path="res://enemies/GeneralEnemy.tscn" id="3_kpgjo"]
+[ext_resource type="PackedScene" uid="uid://et03eynqbyvv" path="res://enemies/MiniBoss.tscn" id="5_apf2t"]
+[ext_resource type="PackedScene" uid="uid://lgf5eibbw7uu" path="res://enemies/EnemyLaser.tscn" id="6_xsrr0"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_3ddj2"]
+noise_type = 0
+frequency = 0.35
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ddtxg"]
+noise = SubResource("FastNoiseLite_3ddj2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ns315"]
+shader = ExtResource("2_02mex")
+shader_parameter/resolution = Vector2(320, 360)
+shader_parameter/density = 20.0
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_ddtxg")
+
+[sub_resource type="LabelSettings" id="LabelSettings_ai2n1"]
+font_size = 12
+
+[sub_resource type="LabelSettings" id="LabelSettings_jwr01"]
+font_size = 12
+
+[sub_resource type="Gradient" id="Gradient_av58n"]
+offsets = PackedFloat32Array(0.57764)
+colors = PackedColorArray(0.717647, 0.717647, 0.717647, 0.0784314)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vpu3j"]
+gradient = SubResource("Gradient_av58n")
+width = 320
+height = 1
+repeat = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k1saa"]
+size = Vector2(288, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j4645"]
+size = Vector2(320, 8)
+
+[sub_resource type="Curve2D" id="Curve2D_8qe78"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 312, -24, 0, 0, 0, 0, 288, 8, 0, 0, 0, 0, 264, 40, 0, 0, 0, 0, 224, 48, 0, 0, 0, 0, 184, 40, 0, 0, 0, 0, 160, 16, 0, 0, 0, 0, 136, 40, 0, 0, 0, 0, 80, 48, 0, 0, 0, 0, 56, 24, 0, 0, 0, 0, 16, 56, 0, 0, 0, 0, -16, 24)
+}
+point_count = 11
+
+[node name="Stage" type="Node2D"]
+process_priority = 1
+script = ExtResource("1_i8ms8")
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="Stars" type="ColorRect" parent="Background"]
+material = SubResource("ShaderMaterial_ns315")
+offset_right = 320.0
+offset_bottom = 360.0
+
+[node name="Overlay" type="CanvasLayer" parent="."]
+
+[node name="ScoreBox" type="VBoxContainer" parent="Overlay"]
+offset_right = 24.0
+offset_bottom = 16.0
+
+[node name="Score" type="Label" parent="Overlay/ScoreBox"]
+layout_mode = 2
+text = "Score:"
+label_settings = SubResource("LabelSettings_ai2n1")
+
+[node name="ScoreAdders" type="Control" parent="Overlay/ScoreBox"]
+layout_mode = 2
+
+[node name="Stage" type="Label" parent="Overlay"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 23.0
+grow_horizontal = 0
+text = "Stage _"
+label_settings = SubResource("LabelSettings_jwr01")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Overlay"]
+offset_left = 216.0
+offset_right = 272.0
+offset_bottom = 16.0
+
+[node name="Life1" type="TextureRect" parent="Overlay/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_ajoat")
+
+[node name="Life2" type="TextureRect" parent="Overlay/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_ajoat")
+
+[node name="Life3" type="TextureRect" parent="Overlay/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_ajoat")
+
+[node name="GameOverLine" type="TextureRect" parent="Overlay"]
+texture_repeat = 2
+offset_top = 327.0
+offset_right = 320.0
+offset_bottom = 328.0
+texture = SubResource("GradientTexture2D_vpu3j")
+stretch_mode = 2
+
+[node name="Camera" type="Camera2D" parent="."]
+offset = Vector2(160, 180)
+
+[node name="Player" parent="." instance=ExtResource("1_7t1lm")]
+position = Vector2(160, 340)
+
+[node name="Disposables" type="Node2D" parent="."]
+
+[node name="PlayerLasers" type="Node2D" parent="Disposables"]
+
+[node name="EnemyLasers" type="Node2D" parent="Disposables"]
+
+[node name="Other" type="Node2D" parent="Disposables"]
+
+[node name="EnemySpawnArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("2_32cy4")
+enemy_scene = ExtResource("3_kpgjo")
+enemy_laser_scene = ExtResource("6_xsrr0")
+mini_boss_scene = ExtResource("5_apf2t")
+
+[node name="CollisionShape" type="CollisionShape2D" parent="EnemySpawnArea"]
+position = Vector2(160, 128)
+shape = SubResource("RectangleShape2D_k1saa")
+
+[node name="GameOverBorder" type="Area2D" parent="EnemySpawnArea"]
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemySpawnArea/GameOverBorder"]
+position = Vector2(160, 332)
+shape = SubResource("RectangleShape2D_j4645")
+
+[node name="MiniBoss" type="Node2D" parent="EnemySpawnArea"]
+
+[node name="MiniBossPath" type="Path2D" parent="EnemySpawnArea/MiniBoss"]
+curve = SubResource("Curve2D_8qe78")
+
+[node name="PathFollower" type="PathFollow2D" parent="EnemySpawnArea/MiniBoss/MiniBossPath"]
+position = Vector2(312, -24)
+rotates = false
+loop = false
+
+[node name="MiniBossDelayTimer" type="Timer" parent="EnemySpawnArea/MiniBoss"]
+wait_time = 10.0
+one_shot = true
+autostart = true
+
+[node name="EnemyShootTimer" type="Timer" parent="EnemySpawnArea"]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[node name="Completed" type="CanvasLayer" parent="."]
+process_mode = 3
+visible = false
+
+[node name="Label" type="Label" parent="Completed"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -62.0
+offset_top = -62.0
+offset_right = 62.0
+offset_bottom = -39.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Level Complete!"
+
+[node name="NextLevel" type="Button" parent="Completed"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -45.0
+offset_top = -15.5
+offset_right = 45.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Next Level
+"
+
+[node name="GameOver" type="CanvasLayer" parent="."]
+process_mode = 3
+visible = false
+
+[node name="Label" type="Label" parent="GameOver"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -43.5
+offset_top = -62.0
+offset_right = 43.5
+offset_bottom = -39.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Game Over
+"
+
+[node name="ResetGame" type="Button" parent="GameOver"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.5
+offset_top = -15.5
+offset_right = 50.5
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Reset Game"
+
+[node name="QuitGame" type="Button" parent="GameOver"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -55.5
+offset_top = 24.5
+offset_right = 55.5
+offset_bottom = 55.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Quit to Menu
+"
+
+[connection signal="area_entered" from="EnemySpawnArea/GameOverBorder" to="." method="_on_game_over_border_area_entered"]
+[connection signal="body_entered" from="EnemySpawnArea/GameOverBorder" to="." method="_on_game_over_border_body_entered"]
+[connection signal="timeout" from="EnemySpawnArea/MiniBoss/MiniBossDelayTimer" to="EnemySpawnArea" method="mini_boss_spawn_check"]
+[connection signal="timeout" from="EnemySpawnArea/EnemyShootTimer" to="EnemySpawnArea" method="_on_enemy_shoot_timer_timeout"]
+[connection signal="pressed" from="Completed/NextLevel" to="." method="_on_next_level_pressed"]
+[connection signal="pressed" from="GameOver/ResetGame" to="." method="_on_reset_game_pressed"]
+[connection signal="pressed" from="GameOver/QuitGame" to="." method="_on_quit_game_pressed"]

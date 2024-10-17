@@ -1,0 +1,77 @@
+[gd_scene load_steps=7 format=3 uid="uid://dfqrvgal1pbau"]
+
+[ext_resource type="Script" path="res://scenes/TitleScreen.gd" id="1_bfh30"]
+[ext_resource type="Shader" path="res://ui/stars.gdshader" id="2_6e83b"]
+[ext_resource type="Texture2D" uid="uid://bxksfdndkf51h" path="res://assets/Planet.png" id="3_0dnat"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_yphcx"]
+noise_type = 0
+frequency = 0.35
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_l10e4"]
+noise = SubResource("FastNoiseLite_yphcx")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qktj5"]
+shader = ExtResource("2_6e83b")
+shader_parameter/resolution = Vector2(320, 360)
+shader_parameter/density = 20.0
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_l10e4")
+
+[node name="TitleScreen" type="Node2D"]
+script = ExtResource("1_bfh30")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -58.5
+offset_top = -80.0
+offset_right = 58.5
+offset_bottom = -57.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Space Invaders"
+
+[node name="PlayGameButton" type="Button" parent="CanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Play Game"
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="Stars" type="ColorRect" parent="Background"]
+material = SubResource("ShaderMaterial_qktj5")
+offset_right = 320.0
+offset_bottom = 360.0
+
+[node name="Planet" type="TextureRect" parent="Background"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = 84.0
+offset_right = 160.0
+offset_bottom = 404.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(160, 160)
+texture = ExtResource("3_0dnat")
+metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="CanvasLayer/PlayGameButton" to="." method="_on_play_game_button_pressed"]
